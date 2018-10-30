@@ -34,7 +34,7 @@ int main(int argc, char** argv)
         if (mode == "0") sack.greedy();
         else sack.better_greedy();
         if (mode == "2") sack.backtracking(0, 0, 0);
-        /*
+        
         for (int i = 0; i < 20000; i++)
         {
             for (int j = 0; j < 20000; j++)
@@ -42,13 +42,13 @@ int main(int argc, char** argv)
                 int k = i * j;
             }
         }
-        */
+        
         output << sack.get_max_profit() << " ";
         end = clock();
         //cout << CLOCKS_PER_SEC << endl;
         //cout << end << endl;
         //cout << start << endl;
-        double duration = (double) (end - start) * 1000.0/ (CLOCKS_PER_SEC);
+        double duration = (double) (end - start)/ (CLOCKS_PER_SEC);
         //duration =  ((double) (end - start)/(double) (CLOCKS_PER_SEC));
 		output << duration << "\n";
     }
