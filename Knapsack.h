@@ -18,6 +18,10 @@ class Knapsack
         int max_profit;
         std::vector<Card*> best;
         std::vector<Card*> include;
+        /*
+        int* curr_row;
+        int* next_row;
+        */
 
     public:
         Knapsack(int c, int n);
@@ -40,6 +44,7 @@ class Knapsack
         bool is_promising(int weight_so_far, float upper_bound);
         float fractional_knapsack(int start, int curr_weight, int curr_profit);
         //float updated_upper_bound(Node my_node, int start_index);
+        void dynamic_knapsack();
 };
 
 #endif

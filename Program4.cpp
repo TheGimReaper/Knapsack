@@ -28,8 +28,10 @@ int main(int argc, char** argv)
         output << num_items << " ";
         sack.quick_sort(sack.get_card_list(), 0, sack.get_num_cards() - 1);
         if (mode == "0") sack.greedy();
-        else sack.better_greedy();
+        else if (mode != "3") sack.better_greedy();
         if (mode == "2") sack.backtracking(0, 0, 0);
+        // *** DYNAMIC PROGRAMMING CODE STARTS HERE *** 
+        else if (mode == "3") sack.dynamic_knapsack();
         output << sack.get_max_profit() << " ";
         end = clock();
         double duration = (double) (end - start)/ (CLOCKS_PER_SEC);

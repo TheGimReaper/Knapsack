@@ -9,6 +9,10 @@ Knapsack::Knapsack(int c, int n)
     card_list = new Card*[n];
     curr_index = 0;
     max_profit = 0; 
+    /*
+    curr_row = new int[c];
+    next_row = new int[c];
+    */
 }
 
 int Knapsack::get_capacity()
@@ -70,15 +74,6 @@ void Knapsack::quick_sort(Card** cards, int first, int last)
     }
 }
 
-/*
-int Knapsack::random_partition(Card** cards, int first, int last)
-{
-    int pivot = rand() % (last - first);
-    swap(cards, pivot, last);
-    return partition (cards, first, last);
-}
-*/
-
 int Knapsack::partition(Card** cards, int first, int last)
 {
     //if (first == last) return first;
@@ -103,7 +98,6 @@ void Knapsack::swap(Card** cards, int index1, int index2)
     Card* temp = card_list[index1];
     card_list[index1] = card_list[index2];
     card_list[index2] = temp;
-
 }
 
 //assumes num_cards is sorted
@@ -200,3 +194,25 @@ float Knapsack::fractional_knapsack(int start, int curr_weight, int curr_profit)
     //cout << total_profit << endl;
     return total_profit;
 }
+
+// *** DYNAMIC PROGRAMMING CODE STARTS HERE *** 
+
+void Knapsack::dynamic_knapsack()
+{
+    int* curr = new int[capacity + 1];
+    int* prev = new int[capacity + 1];
+    for (int i = 0; i < capacity + 1; i++) prev[i] = 0;
+    for (int item = 0; item < num_cards + 1; item++)
+    {
+        Card* my_card = card_list[item - 1];
+        for (int weight = 0; weight <= capacity; weight++)
+        {
+            if (item == 0 || weight == 0) curr[weight] = 0;
+            else if (my_card->get_cost() > weight) curr[weight] = prev[weight];
+            else curr[weight] = max((prev[weight - my_card->get_cost()] + my_card->get_market_price()), prev[weight]);    
+        }
+        for (int i = 0; i < capacity + 1; i++) prev[i] = curr[i];
+        max_profit = curr[capacity];
+    }
+}
+
